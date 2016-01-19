@@ -158,7 +158,7 @@ nav{
 
 .bg{
     
-    background-color: rgba(110,116,116,0.6);
+    background-color: rgba(160,166,166,0.6);
     width: 90%;
     height: 100%;
     margin: auto;
@@ -247,8 +247,24 @@ nav{
     text-decoration: none;
 }
 
+.tabs > div{
+    display: none;
+    background-color: #EBEBEB;
+}
 
+.tabs div:target{
+    display: block;
+}
 
+.inline-par{
+    display: inline-block;
+    margin: 0;
+}
+
+#quick-reports form{
+    display: inline-block;
+    margin-left: 2em;
+}
 
 
 /*=====================end tabs====================*/
