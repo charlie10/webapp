@@ -113,12 +113,17 @@ header form{
     margin: auto;
 }
 body{
-    background-image: url("c:/WebApp_proj/H5BP/img/body-background.jpg");
+    background-image: url("img/body-background.jpg");
     background-repeat: no-repeat;
     background-size: cover;
 }
 
 nav{
+    display: flex;
+    justify-content: space-between;
+}
+
+.display-flex-space-between{
     display: flex;
     justify-content: space-between;
 }
@@ -152,7 +157,8 @@ nav{
 }
 
 .bg{
-    background: linear-gradient(to left,#6E7474,#747978,#6E7474);
+    
+    background-color: rgba(110,116,116,0.6);
     width: 90%;
     height: 100%;
     margin: auto;
@@ -221,6 +227,34 @@ nav{
 
 
 /*=====================end dropmenu====================*/
+
+/*=====================Tabs====================*/
+
+.tabs ul{
+    padding:0;
+}
+
+.tabs li{
+    width: 21.25%;
+    display: inline-block;
+    background-color: #646464;
+    line-height: 2.5em;
+    text-align: center;
+}
+
+.tabs li a{
+    color: white;
+    text-decoration: none;
+}
+
+
+
+
+
+/*=====================end tabs====================*/
+
+
+
 
 
 /* ==========================================================================
