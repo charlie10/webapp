@@ -108,10 +108,11 @@ header form{
 }
 
 .layout-wrap{
-    max-width: 1200px;
-    min-width: 640px;
+ /*   max-width: 1200px;
+    min-width: 640px;*/
     margin: auto;
 }
+
 body{
     background-image: url("img/body-background.jpg");
     background-repeat: no-repeat;
@@ -240,10 +241,11 @@ nav{
     background-color: #646464;
     line-height: 2.5em;
     text-align: center;
+    color: white;
+    cursor: pointer;
 }
 
 .tabs li a{
-    color: white;
     text-decoration: none;
 }
 
@@ -254,6 +256,10 @@ nav{
 
 .tabs div:target {
     display: block;
+}
+
+.tabs-ulist {
+    margin-bottom: 0;
 }
 
 .inline-par{
@@ -284,10 +290,27 @@ nav{
 
 /*=====================end tabs====================*/
 
+iframe {
+    width: 100%;
+    height: 100%;
+}
 
+.tab-surface {
+    height: 40rem;
+    position: relative;
+}
 
-
-
+.settings {
+    /*display: none;*/
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(235, 235, 235, 19);
+    padding: 1rem;
+    box-sizing: border-box;
+}
 /* ==========================================================================
    Helper classes
    ========================================================================== */
