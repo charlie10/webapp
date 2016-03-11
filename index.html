@@ -12,7 +12,8 @@
 
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
-        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+       <!-- <script src="js/vendor/modernizr-2.8.3.min.js"></script> -->
+        <script src="js/main.js"></script>
     </head>
     <body>
         <!--[if lt IE 8]>
@@ -93,14 +94,13 @@
 
                 <section class="tabs">
                     <ul class="display-flex-space-between">
-                        <li><a href="#quick-reports">Quick Reports</a></li>
-                        <li><a href="#my-folders">My Folders</a></li>
-                        <li><a href="#my-team-folders">My Team Folders</a></li>
-                        <li><a href="#public-folders">Public Folders</a></li>
+                        <li id="quick-reports"><a>Quick Reports</a></li>
+                        <li id="my-folders"><a>My Folders</a></li>
+                        <li id="my-team-folders"><a>My Team Folders</a></li>
+                        <li id="public-folders"><a>Public Folders</a></li>
                     </ul>
 
-                    <div id="quick-reports">
-                        hello world
+                    <div id="quick-reports-frame" class="hidden">
 
                         
                         <label for="tab-options">
@@ -112,13 +112,39 @@
                             <form action="">
 
                                 <label for="name1">Name</label>
-                                <input class="" id="name1" type="text">
+                                <input class="input-type1" id="name1" type="text">
 
                                 <label for="url1">URL</label>
-                                <input class="" id="url1" type="url">
+                                <input class="input-type1" id="url1" type="url">
                             
                             </form>
                         </div>
+
+                        <div>
+                            <p class="inline-par">Report02</p>
+                            <form action="">
+
+                                <label for="name2">Name</label>
+                                <input class="input-type1" id="name2" type="text">
+
+                                <label for="url2">URL</label>
+                                <input class="input-type1" id="url2" type="url">
+                            
+                            </form>
+                        </div>
+                        <div>
+                            <p class="inline-par">Report03</p>
+                            <form action="">
+
+                                <label for="name3">Name</label>
+                                <input class="input-type1" id="name3" type="text">
+
+                                <label for="url3">URL</label>
+                                <input class="input-type1" id="url3" type="url">
+                            
+                            </form>
+                        </div>
+                        <button id="save-quick-report-button">Save</button>
                     </div>
 
                     <div id="my-folders">

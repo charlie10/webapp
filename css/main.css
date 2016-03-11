@@ -248,7 +248,7 @@ nav{
 }
 
 .tabs > div{
-    display: none;
+    /*display: none;*/
     background-color: #EBEBEB;
 }
 
@@ -261,9 +261,20 @@ nav{
     margin: 0;
 }
 
-#quick-reports form{
+#quick-reports-frame form{
     display: inline-block;
     margin-left: 2em;
+    width: 80%;
+    margin-bottom: 2em;
+}
+
+#quick-reports-frame{
+    padding: 0.5rem;
+    box-sizing: border-box;
+}
+
+.input-type1 {
+    width: 40%;
 }
 
 
