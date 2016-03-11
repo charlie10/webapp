@@ -252,7 +252,7 @@ nav{
     background-color: #EBEBEB;
 }
 
-.tabs div:target{
+.tabs div:target {
     display: block;
 }
 
@@ -268,13 +268,17 @@ nav{
     margin-bottom: 2em;
 }
 
-#quick-reports-frame{
+#quick-reports-frame {
     padding: 0.5rem;
     box-sizing: border-box;
 }
 
 .input-type1 {
     width: 40%;
+}
+
+.u-hidden {
+    display: none;
 }
 
 
