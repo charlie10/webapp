@@ -26,20 +26,26 @@ window.onload = function(){
 		window.location.hash = ( "/quick-reports" ); //by default show quick - reports frame
 	}
 
+	// set the on click event listener to all the tabs
 	for ( i = 0; i < tabsIds.length; ++i ) {
 		document.getElementById(tabsIds[i]).onclick = handleTabClick;
 	}
 
+	// set the on change event listener to all the urls' names' inputs
 	for ( i = 0; i < urlsNamesIds.length; ++i) {
 		document.getElementById(urlsNamesIds[i]).onchange = handleNameChange;
 	}
 
+	// on reload go to the relevant (last) tab
 	handleTabChange(-1, 0);
 
+	// set the on click listener to the save button
 	saveQuickReportButton = document.getElementById('save-quick-report-button');
 	saveQuickReportButton.onclick = handleSaveURLs;	
 
 
+	/* get the config.json file and hande the data via the
+	   handleConfigData function */
 	UTILS.ajax("data/config.json", {
 									method	: 'get',
 									done  	: handleConfigData
@@ -47,6 +53,9 @@ window.onload = function(){
 
 }
 
+/*
+ * on tab click call the handleTabChange function with IsClick = 1
+*/
 
 function handleTabClick() {
 
@@ -80,7 +89,7 @@ function handleTabChange(element, isClick) {
 	}
 
 	}
-	else {
+	else { // handle page reloading
 		var hashString = window.location.hash;
 		if(hashString == '') {
 			return ;
@@ -133,10 +142,14 @@ function handleNameChange() {
 
 
 function handleConfigData(result) {
-										
-	result 				= JSON.parse(result);
+									
+	if ( ! UTILS.isObject (  result ) ) {
+		result 			= JSON.parse(result);
+	}
 
-	//update the notification area
+	/********************************
+	* Update the notification area
+	*********************************/
 	notification 		= result.notification;
 	notificationElement = document.getElementById('notification-area');
 	//alert(notification);
@@ -147,8 +160,9 @@ function handleConfigData(result) {
 		notificationElement.display   = "none";
 	}
 
-
-	//udpade the quick actions links
+	/********************************
+	* Update the quick actions links
+	*********************************/
 	mainNav = document.getElementById('main-nav');
 
 	quickActions = result.quickActions;
@@ -201,7 +215,9 @@ function handleConfigData(result) {
 
 
 
-	//update the fixed iframes
+	/**************************
+	* Update the fixed iframes*
+	**************************/
 	tabList = result.tabsList;
 
 	//my folder iframe
