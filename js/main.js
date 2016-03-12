@@ -39,6 +39,12 @@ window.onload = function(){
 	saveQuickReportButton = document.getElementById('save-quick-report-button');
 	saveQuickReportButton.onclick = handleSaveURLs;	
 
+
+	UTILS.ajax("data/config.json", {
+									method	: 'get',
+									done  	: handleConfigData
+	});
+
 }
 
 
@@ -124,8 +130,95 @@ function handleNameChange() {
  	//return false;
  }
 
+
+
+function handleConfigData(result) {
+										
+	result 				= JSON.parse(result);
+
+	//update the notification area
+	notification 		= result.notification;
+	notificationElement = document.getElementById('notification-area');
+	//alert(notification);
+	if( ( notification != undefined ) && ( notification !== '' ) ) {
+		notificationElement.innerHTML = result.notification;
+	}
+	else {
+		notificationElement.display   = "none";
+	}
+
+
+	//udpade the quick actions links
+	mainNav = document.getElementById('main-nav');
+
+	quickActions = result.quickActions;
+	for ( i = 0; i < quickActions.length; ++i ) {
+
+		var currentMainDiv 						= document.createElement("DIV"); 
+		currentMainDiv.className				= "nav-section";
+		currentMainDiv.style.backgroundImage 	= "url('img/icons/" + quickActions[i].icon + ".png')"
+
+		var mainLabel							= document.createElement("P");
+		mainLabel.innerHTML						= quickActions[i].label;
+
+		currentMainDiv.appendChild(mainLabel);
+
+		var menuDiv 							= document.createElement("DIV");
+		menuDiv.className 						= "menu";
+
+		var menuCaptionDiv						= document.createElement("DIV");
+		menuCaptionDiv.className 				= "menu-caption";
+
+		var menuCaptionPar 						= document.createElement("P");
+		menuCaptionPar.innerHTML 				= quickActions[i].actionsLabel;
+
+		menuCaptionDiv.appendChild(menuCaptionPar);
+		menuDiv.appendChild(menuCaptionDiv);
+
+		var currentUl 							= document.createElement("UL"); 
+		currentUl.className						= "action-list";
+
+		quickLinks = quickActions[i];
+
+		//for every ul update its lis
+		for ( j = 0; j < quickLinks.actions.length; ++j ) {
+
+			var currentLi 						= document.createElement("LI");  
+			var currentALink 					= document.createElement("A"); 
+
+			currentALink.innerHTML 				= quickLinks.actions[j].label;
+			currentALink.href					= quickLinks.actions[j].url;
+
+			currentLi.appendChild(currentALink);
+			currentUl.appendChild(currentLi);
+		}
+
+		menuDiv.appendChild(currentUl);
+		currentMainDiv.appendChild(menuDiv);
+		mainNav.appendChild(currentMainDiv);
+
+	}
+
+
+
+	//update the fixed iframes
+	tabList = result.tabsList;
+
+	//my folder iframe
+	myFoldersDiv	 = document.getElementById('my-folders-frame');
+	myFoldersframe   = document.createElement("IFRAME");
+	myFoldersframe.setAttribute('src',tabList[1].options.url);
+	myFoldersDiv.appendChild(myFoldersframe);
+
+	//public folders iframe
+	publicFoldersDiv	 = document.getElementById('public-folders-frame');
+	publicFoldersframe   = document.createElement("IFRAME");
+	publicFoldersframe.setAttribute('src',tabList[3].options.url);
+	publicFoldersDiv.appendChild(publicFoldersframe);
+}
+
 /*
-check wheter str is in url format or not
+ * check whether str is in url format or not
 */
 function isUrl(str) {
    var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/

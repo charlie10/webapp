@@ -138,23 +138,12 @@ nav{
     background-position: bottom;
     position: relative;
     cursor: pointer;
+    z-index: 2;
 }
 
 .nav-section > p{
     color: white;
     text-align: center;
-}
-
-.nav-section:first-child{
-    background-image: url(img/icons/action-report-new.png);
-}
-
-.nav-section:nth-child(2){
-    background-image: url(img/icons/action-report-top.png);
-}
-
-.nav-section:nth-child(3){
-    background-image: url(img/icons/actions-help.png);
 }
 
 .bg{

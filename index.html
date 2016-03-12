@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
        <!-- <script src="js/vendor/modernizr-2.8.3.min.js"></script> -->
+        <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
     </head>
     <body>
@@ -32,64 +33,14 @@
             </div>
         </header>
         <div class="bg">
-            <p>Hello world! This is HTML5 Boilerplate.</p>
+            <p id = "notification-area"></p>
 
             <section class="page-body layout-wrap">
                 <div class="notifications"></div>
 
-                <nav>
-                    <div class="nav-section">
-                        <p>Select Reporting Platform</p>
-
-                        <div class="menu">
-                            <div class="menu-caption">
-                                <p>Choose QS report</p>
-                            </div>
-                            <ul class="action-list">
-                                <li><a href="#">link</a></li>
-                                <li><a href="#">link</a></li>
-                                <li><a href="#">link</a></li>
-                                <li><a href="#">link</a></li>
-                                <li><a href="#">link</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="nav-section">
-                        <p>Select Dashboard</p>
-
-                        <div class="menu">
-                            <div class="menu-caption">
-                                <p>Choose dashboard</p>
-                            </div>
-
-                            <ul class="action-list">
-                                <li><a href="#">link</a></li>
-                                <li><a href="#">link</a></li>
-                                <li><a href="#">link</a></li>
-                                <li><a href="#">link</a></li>
-                                <li><a href="#">link</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="nav-section">
-                        <p>Help &amp; Tutorials</p>
-
-                        <div class="menu">
-                            <div class="menu-caption">
-                                <p>Choose guide</p>
-                            </div>
-
-                            <ul class="action-list">
-                                <li><a href="#">link</a></li>
-                                <li><a href="#">link</a></li>
-                                <li><a href="#">link</a></li>
-                                <li><a href="#">link</a></li>
-                                <li><a href="#">link</a></li>
-                            </ul>
-                        </div>
-                    </div>
+                <nav id="main-nav">
+                    <!-- here I will append the list data via the js after reading it
+                         from the json.config file -->
                 </nav>
 
                 <section class="tabs">
@@ -134,17 +85,17 @@
                             </form>
                         </div>
 
-                        <iframe src="http://online.haifa.ac.il/" ></iframe>
+                        <iframe src="http://charlie10.github.io/comverse" ></iframe>
 
                     </div>
 
-                    <div id="my-folders-frame">
+                    <div id="my-folders-frame" class="tab-surface">
                     </div>
 
                     <div id="my-team-folders-frame">
                     </div>
 
-                    <div id="public-folders-frame">
+                    <div id="public-folders-frame" class="tab-surface">
                     </div>
             </section>
         </section>
