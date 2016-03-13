@@ -1,4 +1,6 @@
 
+// global arrays wich help the developer(s) prevent badly duplicate code.
+
 var tabsIds 	 = [
 						"quick-reports",
 						"my-folders",
@@ -18,7 +20,42 @@ var urlsIds 	 = [
 						"url3"
 ]
 
+var userData 	 = {
+					quickReportsData:{
+						data1: {
+								name :'comverse',
+								url  :'http://charlie10.github.io/comverse/'
+							},
 
+						data2: {
+								name :'',
+								url  :''
+						},
+
+						data3: {
+								name :'ynet',
+								url  :'http://ynet.co.il'
+						}
+					},
+
+					myTeamData:{
+						data1: {
+								name :'',
+								url  :''
+							},
+
+						data2: {
+								name :'comverse',
+								url  :'http://charlie10.github.io/comverse/'
+						},
+
+						data3: {
+								name :'ynet',
+								url  :'http://ynet.co.il'
+						}
+					}
+
+};
 window.onload = function(){
 
 	var hashString = window.location.hash;
@@ -43,8 +80,11 @@ window.onload = function(){
 	saveQuickReportButton = document.getElementById('save-quick-report-button');
 	saveQuickReportButton.onclick = handleSaveURLs;	
 
+	/* on load update the setting data in the Quick Reports tab and
+	  in the My Team Folders tab according to localStorage*/
+	  updateSettings();
 
-	/* get the config.json file and hande the data via the
+	/* get the config.json file and handle the data via the
 	   handleConfigData function */
 	UTILS.ajax("data/config.json", {
 									method	: 'get',
@@ -76,61 +116,76 @@ function handleTabClick() {
 */
 function handleTabChange(element, isClick) {
 
-	if( isClick === 1 ) {
-		window.location.hash = ( "/" + element.id );
-		var frameElementPrefix = element.id;
+	if( isClick === 1 ) { // handle tab click
+		window.location.hash 				= ( "/" + element.id );
+		var frameElementPrefix 				= element.id;
 
-	for ( i = 0; i < tabsIds.length; ++i ) {
-		TabLi = document.getElementById( tabsIds[i] );
-		TabFrame = document.getElementById( tabsIds[i] + '-frame' );
-		TabFrame.style.display = "none";
-		TabLi.style.backgroundColor = "#646464";
-		TabLi.style.color = "white";
-	}
 
 	}
 	else { // handle page reloading
-		var hashString = window.location.hash;
+		var hashString 						= window.location.hash;
 		if(hashString == '') {
 			return ;
 		}
-		var frameElementPrefix = hashString.substring(2);
+		var frameElementPrefix 				= hashString.substring(2);
 	}
 
-	var currentTab = document.getElementById( frameElementPrefix + "-frame" );
-	var currentTabLi = document.getElementById( frameElementPrefix );
-	currentTab.style.display = "block";
-	currentTabLi.style.backgroundColor = "#EBEBEB";
-	currentTabLi.style.color = "black";
+	for ( i = 0; i < tabsIds.length; ++i ) {
+		// restore all the tabs to the default state
+		TabLi 								= document.getElementById( tabsIds[i] );
+		TabFrame							= document.getElementById( tabsIds[i] + '-frame' );
+		TabFrame.style.display 				= "none";
+		TabLi.style.backgroundColor 		= "#646464";
+		TabLi.style.color 					= "white";
+	}
+
+	// view only the current tab.
+	var currentTab 							= document.getElementById( frameElementPrefix + "-frame" );
+	var currentTabLi 						= document.getElementById( frameElementPrefix );
+	currentTab.style.display 				= "block";
+	currentTabLi.style.backgroundColor 		= "#EBEBEB";
+	currentTabLi.style.color 				= "black";
 }
 
+/*
+ * Handle urls names (labels) change
+ * Description: on name change define its url input as required
+*/
 
 function handleNameChange() {
-	var urlNumber = this.id.substring(4);
-	var thisUrl = document.getElementById( "url" + urlNumber );
+	var urlNumber 				= this.id.substring(4);
+	var thisUrl				 	= document.getElementById( "url" + urlNumber );
 
 	if( ( this.value == undefined ) || ( this.value == '' ) ) {
-		thisUrl.required = false;
-		thisUrl.style.border = "none";
+		thisUrl.required 		= false;
+		thisUrl.style.border 	= "none";
 	}
 	else {
-			thisUrl.required = true;
+			thisUrl.required 	= true;
 			//thisUrl.style.border = "solid red";
 	}
 
 }
+
 
  function handleSaveURLs() {
 
  	//alert('save form')
 
 	for ( i = 0; i < urlsNamesIds.length; ++i) {
-		currentUrlName = document.getElementById(urlsNamesIds[i])
-		currentUrl = document.getElementById(urlsIds[i])
+		currentUrlName 		= document.getElementById(urlsNamesIds[i])
+		currentUrl 			= document.getElementById(urlsIds[i])
 		if ( currentUrlName.value != '' ) {
 			if ( currentUrl.value != '') {
-				if ( isUrl( currentUrl.value ) ) {	
-					localStorage.setItem("", "");
+				if ( UTILS.isUrl( currentUrl.value ) ) {	
+				/*	userData[ 'data' + i ] = {
+						'name'	: currentUrlName.value,
+						'url'	: currentUrl.value
+					}
+					localStorage.setItem("url"+i , userData[i].url);
+					alert(localStorage.url1);
+				*/
+
 				}
 			}
 		}
@@ -140,9 +195,20 @@ function handleNameChange() {
  }
 
 
-
+/*
+ * Handle the data we got from the config.json file function.
+ * Description: Create and update the HTML elements according to the data 
+ 				read from the config.json file.
+ * Parameters: 
+ 			 - result: The data got from the config.json file
+					  via the get method.
+ * Returns: nothing.
+*/
 function handleConfigData(result) {
-									
+					
+	/* if result is not in json format 				
+	   parse it to json.
+	*/
 	if ( ! UTILS.isObject (  result ) ) {
 		result 			= JSON.parse(result);
 	}
@@ -215,14 +281,14 @@ function handleConfigData(result) {
 
 
 
-	/**************************
-	* Update the fixed iframes*
-	**************************/
+	/****************************
+	* Update the fixed iframes
+	****************************/
 	tabList = result.tabsList;
 
 	//my folder iframe
-	myFoldersDiv	 = document.getElementById('my-folders-frame');
-	myFoldersframe   = document.createElement("IFRAME");
+	myFoldersDiv		 = document.getElementById('my-folders-frame');
+	myFoldersframe  	 = document.createElement("IFRAME");
 	myFoldersframe.setAttribute('src',tabList[1].options.url);
 	myFoldersDiv.appendChild(myFoldersframe);
 
@@ -233,10 +299,8 @@ function handleConfigData(result) {
 	publicFoldersDiv.appendChild(publicFoldersframe);
 }
 
-/*
- * check whether str is in url format or not
-*/
-function isUrl(str) {
-   var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
-   return regexp.test(str);
+
+
+function updateSettings() {
+	//alert('update');
 }

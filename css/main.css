@@ -94,7 +94,7 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
-header{
+header {
     background-color: black;
     padding-top: 1em;
     padding-bottom: 1em;
@@ -102,34 +102,34 @@ header{
     padding-right: 5em;
 }
 
-header form{
+header form {
     float: right;
 
 }
 
-.layout-wrap{
+.layout-wrap {
  /*   max-width: 1200px;
     min-width: 640px;*/
     margin: auto;
 }
 
-body{
+body {
     background-image: url("img/body-background.jpg");
     background-repeat: no-repeat;
     background-size: cover;
 }
 
-nav{
+nav {
     display: flex;
     justify-content: space-between;
 }
 
-.display-flex-space-between{
+.display-flex-space-between {
     display: flex;
     justify-content: space-between;
 }
 
-.nav-section{
+.nav-section {
     background-color: black;
     width: 30%;
     height: 10em;
@@ -141,12 +141,12 @@ nav{
     z-index: 2;
 }
 
-.nav-section > p{
+.nav-section > p {
     color: white;
     text-align: center;
 }
 
-.bg{
+.bg {
     
     background-color: rgba(160,166,166,0.6);
     width: 90%;
@@ -155,15 +155,18 @@ nav{
     padding: 1em;
 }
 
-.action-list a{
+.action-list a {
     text-decoration: none;
     color: inherit;
+    display: inline-block;
+    width: 100%;
 }
-.menu-caption p{
+
+.menu-caption p {
     margin: 0;
 }
 
-.menu-caption p::after{
+.menu-caption p::after {
     content: " ";
     border: 8px solid transparent;
     border-top: 8px solid black;
@@ -174,7 +177,7 @@ nav{
 }
 
 /*=====================dropmenu====================*/
-.menu-caption{
+.menu-caption {
     width: 100%;
     line-height: 2em;
     background-color: #EEEEEE;
@@ -183,7 +186,7 @@ nav{
     box-sizing:border-box;
 }
 
-.menu{
+.menu {
     width: 100%;
     position: absolute;
     top: calc(100% - 2em);
@@ -191,7 +194,7 @@ nav{
 
 }
 
-.action-list{
+.action-list {
     padding: 0;
     margin: 0;
     display: none;
@@ -200,11 +203,11 @@ nav{
 }
 
 
-.nav-section:hover{
+.nav-section:hover {
     background-color: #111111;
 }
 
-.nav-section:hover .action-list{
+.nav-section:hover .action-list {
     display: block;
 
 }
@@ -213,7 +216,7 @@ nav{
     transform: rotate(180deg) translatey(50%);
 }
 
-.action-list li{
+.action-list li {
     width: 100%;
     display: block;
     border-bottom: inset;
@@ -231,11 +234,11 @@ nav{
 
 /*=====================Tabs====================*/
 
-.tabs ul{
+.tabs ul {
     padding:0;
 }
 
-.tabs li{
+.tabs li {
     width: 21.25%;
     display: inline-block;
     background-color: #646464;
@@ -245,11 +248,11 @@ nav{
     cursor: pointer;
 }
 
-.tabs li a{
+.tabs li a {
     text-decoration: none;
 }
 
-.tabs > div{
+.tabs > div {
     /*display: none;*/
     background-color: #EBEBEB;
 }
@@ -262,12 +265,12 @@ nav{
     margin-bottom: 0;
 }
 
-.inline-par{
+.inline-par {
     display: inline-block;
     margin: 0;
 }
 
-#quick-reports-frame form{
+#quick-reports-frame form {
     display: inline-block;
     margin-left: 2em;
     width: 80%;
@@ -311,6 +314,9 @@ iframe {
     padding: 1rem;
     box-sizing: border-box;
 }
+
+
+
 /* ==========================================================================
    Helper classes
    ========================================================================== */

@@ -31,6 +31,34 @@
 var UTILS = (function () {
 
 	return {
+
+		/*
+		 * Load the data from the local storage.
+		 * @return the data of type object.
+		*/
+		 loadStorage: function () {
+		   data = localStorage.getItem('UserData');
+		   return JSON.parse(data);
+		},
+
+		/*
+		 * Store the data in the local storage.
+		 * @param data of type object to store.
+		*/
+		 storeStorage: function (data) {
+		   data = JSON.stringify(data);
+		   localStorage.setItem('UserData', data);
+		},
+
+		/*
+		 * Check whether the str string is in url format or not
+		 * @param {string} str.
+		*/
+		 isUrl: function (str) {
+		   var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+		   return regexp.test(str);
+		},
+
 		/**
 		 * Check if a given value is a plain Object
 		 *
