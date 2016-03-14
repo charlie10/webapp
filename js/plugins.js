@@ -1,3 +1,46 @@
+
+
+
+var userDataSturct 	 = {
+					quickReportsData:[
+						 {
+								name :'',
+								url  :''
+							},
+
+						 {
+								name :'',
+								url  :''
+						},
+
+						 {
+								name :'',
+								url  :''
+						}
+					],
+
+					myTeamData:[
+						 {
+								name :'',
+								url  :''
+							},
+
+						 {
+								name :'',
+								url  :''
+						},
+
+						 {
+								name :'',
+								url  :''
+						}
+					]
+
+};
+
+
+
+
 // Avoid `console` errors in browsers that lack a console.
 (function() {
     var method;
@@ -33,12 +76,26 @@ var UTILS = (function () {
 	return {
 
 		/*
+		 * check if obj is not empty
+		 * @param object/string  to check
+		 * @return true if obj is not empty and false otherwise.
+		*/
+		 notEmpty: function (obj) {
+		 	if ( ( obj == undefined ) || ( obj == '' ) || ( !obj ) || ( obj == {} ) )
+		 		return false;
+		 	return true;
+		 },
+
+		/*
 		 * Load the data from the local storage.
 		 * @return the data of type object.
 		*/
 		 loadStorage: function () {
-		   data = localStorage.getItem('UserData');
-		   return JSON.parse(data);
+		   data = JSON.parse( localStorage.getItem('UserData') );
+		   if( ( data == undefined ) || ( !data ) || ( data == {} ) || ( data == '' ) ) {
+		   		return userDataSturct;
+		   }
+		   return data;
 		},
 
 		/*

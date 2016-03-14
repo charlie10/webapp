@@ -20,47 +20,53 @@ var urlsIds 	 = [
 						"url3"
 ]
 
-var userData 	 = {
-					quickReportsData:{
-						data1: {
-								name :'comverse',
-								url  :'http://charlie10.github.io/comverse/'
-							},
+var optionsIds	= [
+						"option1",
+						"option2",
+						"option3"
+]
 
-						data2: {
-								name :'',
-								url  :''
-						},
-
-						data3: {
-								name :'ynet',
-								url  :'http://ynet.co.il'
-						}
-					},
-
-					myTeamData:{
-						data1: {
+var exmpUserData 	 = {
+					quickReportsData:[
+						 {
 								name :'',
 								url  :''
 							},
 
-						data2: {
-								name :'comverse',
-								url  :'http://charlie10.github.io/comverse/'
+						 {
+								name :'',
+								url  :''
 						},
 
-						data3: {
-								name :'ynet',
-								url  :'http://ynet.co.il'
+						 {
+								name :'',
+								url  :''
 						}
-					}
+					],
+
+					myTeamData:[
+						 {
+								name :'',
+								url  :''
+							},
+
+						 {
+								name :'',
+								url  :''
+						},
+
+						 {
+								name :'',
+								url  :''
+						}
+					]
 
 };
 window.onload = function(){
 
 	var hashString = window.location.hash;
 	if ( hashString == '' ) {
-		window.location.hash = ( "/quick-reports" ); //by default show quick - reports frame
+		window.location.hash = ( "/quick-reports" ); //by default show Quick Reports frame
 	}
 
 	// set the on click event listener to all the tabs
@@ -73,6 +79,11 @@ window.onload = function(){
 		document.getElementById(urlsNamesIds[i]).onchange = handleNameChange;
 	}
 
+	// set the on change event listener to all the urls' inputs
+	for ( i = 0; i < urlsIds.length; ++i) {
+		document.getElementById(urlsIds[i]).onchange = handleUrlChange;
+	}
+
 	// on reload go to the relevant (last) tab
 	handleTabChange(-1, 0);
 
@@ -80,9 +91,8 @@ window.onload = function(){
 	saveQuickReportButton = document.getElementById('save-quick-report-button');
 	saveQuickReportButton.onclick = handleSaveURLs;	
 
-	/* on load update the setting data in the Quick Reports tab and
-	  in the My Team Folders tab according to localStorage*/
-	  updateSettings();
+	document.getElementById('quick-reports-settings-button').onclick = handleSettingClick;
+	document.getElementById('quick-reports-cancel-settings-button').onclick = handleCancelSettingClick;
 
 	/* get the config.json file and handle the data via the
 	   handleConfigData function */
@@ -90,6 +100,29 @@ window.onload = function(){
 									method	: 'get',
 									done  	: handleConfigData
 	});
+
+	/* on load update the setting data in the Quick Reports tab and
+	  in the My Team Folders tab according to localStorage*/
+	updateUserDataOnTheScreen();
+
+	updateDropDownList();
+
+}
+
+function updateUserDataOnTheScreen() {
+
+	var data = UTILS.loadStorage();
+
+	// Update Quick Reports data
+	var quickReportsData = data.quickReportsData
+	for( i = 0; i < quickReportsData.length; ++i ) {
+		
+		var currentUrlName 			= document.getElementById( urlsNamesIds[i] );
+		var currentUrl 				= document.getElementById( urlsIds[i] );
+
+		currentUrlName.value		= quickReportsData[i].name;
+		currentUrl.value 			= quickReportsData[i].url;
+	}
 
 }
 
@@ -149,7 +182,7 @@ function handleTabChange(element, isClick) {
 
 /*
  * Handle urls names (labels) change
- * Description: on name change define its url input as required
+ * Description: on name change make its url input as required
 */
 
 function handleNameChange() {
@@ -157,12 +190,50 @@ function handleNameChange() {
 	var thisUrl				 	= document.getElementById( "url" + urlNumber );
 
 	if( ( this.value == undefined ) || ( this.value == '' ) ) {
-		thisUrl.required 		= false;
-		thisUrl.style.border 	= "none";
+		thisUrl.required 			= false;
+		thisUrl.style.border.color 	= "transparent";
 	}
 	else {
-			thisUrl.required 	= true;
-			//thisUrl.style.border = "solid red";
+			thisUrl.required 		= true;
+			thisUrl.style.border 	= "solid red";
+	}
+
+}
+
+
+/*
+ * Handle urls change
+ * Description: on url change make its url input as required
+*/
+
+function handleUrlChange() {
+	var nameNumber 				= this.id.substring(3);
+	var thisName				= document.getElementById( "name" + nameNumber );
+
+	if ( UTILS.notEmpty(thisName.value) ) {
+		this.required = true;
+		if ( !UTILS.notEmpty(this.value) || !UTILS.isUrl(this.value) ) {
+
+			this.style.border.color = "solid red";
+
+		}
+		else {
+
+			this.style.border.color = "transparent";
+
+		}
+	}
+	else {
+		if ( UTILS.notEmpty(this.value) ) {
+
+			thisName.required = true;
+			thisName.style.border.color = "solid red";
+		}
+		else {
+
+			thisName.required 			= false;
+			this.required 				= false;
+		}
 	}
 
 }
@@ -171,29 +242,53 @@ function handleNameChange() {
  function handleSaveURLs() {
 
  	//alert('save form')
-
+ 	var newData = UTILS.loadStorage();
 	for ( i = 0; i < urlsNamesIds.length; ++i) {
-		currentUrlName 		= document.getElementById(urlsNamesIds[i])
-		currentUrl 			= document.getElementById(urlsIds[i])
-		if ( currentUrlName.value != '' ) {
-			if ( currentUrl.value != '') {
-				if ( UTILS.isUrl( currentUrl.value ) ) {	
-				/*	userData[ 'data' + i ] = {
-						'name'	: currentUrlName.value,
-						'url'	: currentUrl.value
-					}
-					localStorage.setItem("url"+i , userData[i].url);
-					alert(localStorage.url1);
-				*/
 
-				}
+		currentUrlName 		= document.getElementById(urlsNamesIds[i]);
+		currentUrl 			= document.getElementById(urlsIds[i]);
+
+		if ( UTILS.isUrl( currentUrl.value ) || ( ( currentUrlName.value == '' ) && ( currentUrl.value == '' ) )) {
+		
+			newData.quickReportsData[i] = {
+				name	: currentUrlName.value,
+				url		: currentUrl.value
 			}
+
+			//alert(localStorage.url1);		
 		}
 	}
+
+	UTILS.storeStorage(newData);
+
+	updateDropDownList();
 
  	//return false;
  }
 
+
+function updateDropDownList() {
+	var dropDownList 			= document.getElementById("quick-reports-drop-down-links");
+	dropDownList.innerHTML 		= "";
+	dropDownList.onchange = handleOptionClick;
+
+	// Update the drop-down list at the quick reports tab
+	for ( i = 0; i < urlsNamesIds.length; ++i) {
+		currentUrlName 					= document.getElementById(urlsNamesIds[i]);
+		currentUrl 						= document.getElementById(urlsIds[i]);
+		if ( UTILS.notEmpty(currentUrlName.value) && UTILS.notEmpty(currentUrl.value) ) {
+			dropDownList.style.display  = "inline-block";
+
+			var currentOption			= document.createElement("OPTION");
+
+			currentOption.value 		= currentUrl.value;
+			currentOption.innerHTML 	= currentUrlName.value;
+
+ 			dropDownList.appendChild(currentOption);
+		}
+	}
+
+}
 
 /*
  * Handle the data we got from the config.json file function.
@@ -229,7 +324,8 @@ function handleConfigData(result) {
 	/********************************
 	* Update the quick actions links
 	*********************************/
-	mainNav = document.getElementById('main-nav');
+	mainNav 		  = document.getElementById('main-nav');
+	mainNav.innerHTML = "";
 
 	quickActions = result.quickActions;
 	for ( i = 0; i < quickActions.length; ++i ) {
@@ -300,7 +396,35 @@ function handleConfigData(result) {
 }
 
 
+function handleSettingClick() {
 
-function updateSettings() {
-	//alert('update');
+	if ( this.id == 'quick-reports-settings-button' ) {
+
+		document.getElementById('quick-reports-settings').style.display = "block";
+
+	}
+
+	else if ( this.id == 'my-team-folders-settings-button' ) {
+		//handle this case
+	}
+}
+
+
+
+
+function handleCancelSettingClick() {
+
+	if ( this.id == 'quick-reports-cancel-settings-button' ) {
+
+		document.getElementById('quick-reports-settings').style.display = "none";
+
+	}
+
+	else if ( this.id == 'my-team-folders-cancel-settings-button' ) {
+		//handle this case
+	}
+}
+
+function handleOptionClick() {
+	document.getElementById('quick-reports-iframe').setAttribute('src', this.value);
 }

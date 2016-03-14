@@ -304,10 +304,8 @@ iframe {
 }
 
 .settings {
-    /*display: none;*/
+    display: none;
     position: absolute;
-    display: block;
-    top: 0;
     left: 0;
     width: 100%;
     background-color: rgba(235, 235, 235, 19);
@@ -315,11 +313,29 @@ iframe {
     box-sizing: border-box;
 }
 
+.drop-down-links {
+    display: none;
+    z-index: 10;
+}
 
+.frame-control {
+    text-align: right;
+    padding: 0.8rem;
+    box-sizing: border-box;
+    position: relative;
+}
 
 /* ==========================================================================
    Helper classes
    ========================================================================== */
+
+.u-normal-link{
+    color: inherit;
+    display: inline-block;
+    text-decoration: none;
+}
+
+
 
 /*
  * Hide visually and from screen readers:

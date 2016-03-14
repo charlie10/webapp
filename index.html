@@ -41,19 +41,88 @@
                 <nav id="main-nav">
                     <!-- here I will append the list data via the js after reading it
                          from the json.config file -->
-                </nav>
+                          <div class="nav-section">
+                        <p>Select Reporting Platform</p>
 
+                        <div class="menu">
+                            <div class="menu-caption">
+                                <p>Choose QS report</p>
+                            </div>
+                            <ul class="action-list">
+                                <li><a href="#">link</a></li>
+                                <li><a href="#">link</a></li>
+                                <li><a href="#">link</a></li>
+                                <li><a href="#">link</a></li>
+                                <li><a href="#">link</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="nav-section">
+                        <p>Select Dashboard</p>
+
+                        <div class="menu">
+                            <div class="menu-caption">
+                                <p>Choose dashboard</p>
+                            </div>
+
+                            <ul class="action-list">
+                                <li><a href="#">link</a></li>
+                                <li><a href="#">link</a></li>
+                                <li><a href="#">link</a></li>
+                                <li><a href="#">link</a></li>
+                                <li><a href="#">link</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="nav-section">
+                        <p>Help &amp; Tutorials</p>
+
+                        <div class="menu">
+                            <div class="menu-caption">
+                                <p>Choose guide</p>
+                            </div>
+
+                            <ul class="action-list">
+                                <li><a href="#">link</a></li>
+                                <li><a href="#">link</a></li>
+                                <li><a href="#">link</a></li>
+                                <li><a href="#">link</a></li>
+                                <li><a href="#">link</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+    
                 <section class="tabs">
                     <ul class="display-flex-space-between tabs-ulist">
-                        <li id="quick-reports"><a>Quick Reports</a></li>
-                        <li id="my-folders"><a>My Folders</a></li>
-                        <li id="my-team-folders"><a>My Team Folders</a></li>
-                        <li id="public-folders"><a>Public Folders</a></li>
+                        <li href="#quick-reports" id="quick-reports"><a><i></i>Quick Reports</a></li>
+                        <li href="#my-folders" id="my-folders"><a>My Folders</a></li>
+                        <li href="#my-team-folders" id="my-team-folders"><a>My Team Folders</a></li>
+                        <li href="#public-folders" id="public-folders"><a>Public Folders</a></li>
                     </ul>
 
                     <div id="quick-reports-frame" class="u-hidden tab-surface">
 
-                        <div class="settings">
+                        <div class="frame-control">
+                            <select class = "drop-down-links" id="quick-reports-drop-down-links">
+                                <option value=""></option>
+                                <option value=""></option>
+                                <option value=""></option>
+
+                            </select>
+
+                            <a href="" class="u-normal-link">
+                                <img src="./img/icons/expand.png" alt="External Website frame">
+                            </a>
+
+                            <a id="quick-reports-settings-button" class="u-normal-link">
+                                <img src="./img/icons/settings.png" alt="Quick Reports settings">
+                            </a>
+                        </div>
+
+                        <div id="quick-reports-settings" class="settings">
                             <form >
                                 
                                 <div>
@@ -79,13 +148,14 @@
                                     <label for="url3">URL</label>
                                     <input class="input-type1" id="url3" type="url">
                                 </div>
-                                
-                                <input id="save-quick-report-button" type="submit" value="Save">
+
+                                <button id="quick-reports-cancel-settings-button">Cancel</button>
+                                <button id="save-quick-report-button">Save</button>
 
                             </form>
                         </div>
 
-                        <iframe src="http://charlie10.github.io/comverse" ></iframe>
+                        <iframe id="quick-reports-iframe" src="" ></iframe>
 
                     </div>
 
