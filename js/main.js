@@ -26,43 +26,13 @@ var optionsIds	= [
 						"option3"
 ]
 
-var exmpUserData 	 = {
-					quickReportsData:[
-						 {
-								name :'',
-								url  :''
-							},
 
-						 {
-								name :'',
-								url  :''
-						},
-
-						 {
-								name :'',
-								url  :''
-						}
-					],
-
-					myTeamData:[
-						 {
-								name :'',
-								url  :''
-							},
-
-						 {
-								name :'',
-								url  :''
-						},
-
-						 {
-								name :'',
-								url  :''
-						}
-					]
-
-};
 window.onload = function(){
+
+	var hashString = window.location.hash;
+	if ( ( hashString == undefined ) || ( hashString == '' )  ) {
+		window.location.hash = ( "/quick-reports" ); //by default show quick - reports frame
+	}
 
 	//restore the last tab
 	var hashString = window.location.hash;
@@ -72,16 +42,6 @@ window.onload = function(){
 	// set the on click event listener to all the tabs
 	for ( i = 0; i < tabsIds.length; ++i ) {
 		document.getElementById(tabsIds[i]).onclick = handleTabClick;
-	}
-
-	// set the on change event listener to all the urls' names' inputs
-	for ( i = 0; i < urlsNamesIds.length; ++i) {
-		document.getElementById(urlsNamesIds[i]).onchange = handleNameChange;
-	}
-
-	// set the on change event listener to all the urls' inputs
-	for ( i = 0; i < urlsIds.length; ++i) {
-		document.getElementById(urlsIds[i]).onchange = handleUrlChange;
 	}
 
 	// on reload go to the relevant (last) tab
@@ -114,8 +74,17 @@ function updateUserDataOnTheScreen() {
 
 	var data = UTILS.loadStorage();
 
+
 	// Update Quick Reports data
 	var quickReportsData = data.quickReportsData
+
+	// update the iframe to be the first url
+	for( i = ( quickReportsData.length - 1 ); i >= 0 ; --i ) {
+		if( UTILS.notEmpty(quickReportsData[i].url) ) {
+			document.getElementById('quick-reports-iframe').setAttribute('src', quickReportsData[i].url);
+		}
+	}
+
 	for( i = 0; i < quickReportsData.length; ++i ) {
 		
 		var currentUrlName 			= document.getElementById( urlsNamesIds[i] );
@@ -191,69 +160,72 @@ function handleExternalWebsite() {
 
 }
 
-/*
- * Handle urls names (labels) change
- * Description: on name change make its url input as required
-*/
-
-function handleNameChange() {
-	var urlNumber 				= this.id.substring(4);
-	var thisUrl				 	= document.getElementById( "url" + urlNumber );
-
-	if( ( this.value == undefined ) || ( this.value == '' ) ) {
-		thisUrl.required 			= false;
-		thisUrl.style.border.color 	= "transparent";
-	}
-	else {
-			thisUrl.required 		= true;
-			thisUrl.style.border 	= "solid red";
-	}
-
-}
-
 
 /*
- * Handle urls change
- * Description: on url change make its url input as required
- * SHOULD BE UPDATED !!!
+ * validate settings input number inputNumber
 */
+function validateSettingsInput(inputNumber) {
 
-function handleUrlChange() {
-	var nameNumber 				= this.id.substring(3);
-	var thisName				= document.getElementById( "name" + nameNumber );
+	var thisName						= document.getElementById( "name" + inputNumber );
+	var thisUrl				 			= document.getElementById( "url" + inputNumber );
+	var thisNameValue 					=  thisName.value;
+	var thisUrlValue 					= thisUrl.value
 
-	if ( UTILS.notEmpty(thisName.value) ) {
-		this.required = true;
-		if ( !UTILS.notEmpty(this.value) || !UTILS.isUrl(this.value) ) {
+	if ( UTILS.notEmpty(thisNameValue) ) {
 
-			this.style.border.color = "solid red";
+		if ( ( !UTILS.notEmpty(thisUrlValue) ) || ( !UTILS.isUrl(thisUrlValue) ) ) {
+
+			thisUrl.style.border 		= "solid red";
+			thisName.style.border 		= "transparent";
+			thisUrl.required			= true;
+
+			return false;		
 
 		}
 		else {
 
-			this.style.border.color = "transparent";
+			thisUrl.style.border 		= "transparent";
+			thisName.style.border 		= "transparent";
+
+			return true;
 
 		}
+
 	}
 	else {
-		if ( UTILS.notEmpty(this.value) ) {
 
-			thisName.required = true;
-			thisName.style.border.color = "solid red";
+		if ( UTILS.notEmpty(thisUrlValue) ) {
+
+			thisName.style.border 		= "solid red";
+			thisUrl.style.border		= "transparent";
+			thisName.required 			= true;
+
+			return false;
+
 		}
 		else {
 
+			thisUrl.style.border 		= "transparent";
+			thisName.style.border 		= "transparent";
 			thisName.required 			= false;
-			this.required 				= false;
+			thisUrl.required			= false;	
+
+			return true;
+
 		}
 	}
 
 }
-
 
  function handleSaveURLs() {
 
- 	//alert('save form')
+ 	//validate the data
+ 	for ( i = 1; i <= urlsNamesIds.length; ++i) {
+
+ 		if ( validateSettingsInput(i) == false )
+ 			return;
+ 	}
+
  	var newData = UTILS.loadStorage();
 	for ( i = 0; i < urlsNamesIds.length; ++i) {
 
@@ -274,7 +246,8 @@ function handleUrlChange() {
 	UTILS.storeStorage(newData);
 
 	updateDropDownList();
-	document.getElementById('quick-reports-settings-button').style.display = "none";
+	updateUserDataOnTheScreen();
+	document.getElementById('quick-reports-settings').style.display = "none";
  	//return false;
  }
 
