@@ -53,7 +53,6 @@ window.onload = function(){
 
 	document.getElementById('quick-reports-settings-button').onclick = handleSettingClick;
 	document.getElementById('quick-reports-cancel-settings-button').onclick = handleCancelSettingClick;
-	document.getElementById('external-website-frame-button').onclick = handleExternalWebsite;
 
 	/* get the config.json file and handle the data via the
 	   handleConfigData function */
@@ -80,9 +79,12 @@ function updateUserDataOnTheScreen() {
 
 	// update the iframe to be the first url
 	for( i = ( quickReportsData.length - 1 ); i >= 0 ; --i ) {
+
 		if( UTILS.notEmpty(quickReportsData[i].url) ) {
 			document.getElementById('quick-reports-iframe').setAttribute('src', quickReportsData[i].url);
+			document.getElementById('external-website-frame-button').setAttribute('href', quickReportsData[i].url);
 		}
+
 	}
 
 	for( i = 0; i < quickReportsData.length; ++i ) {
@@ -154,10 +156,6 @@ function handleTabChange(element, isClick) {
 	currentTab.style.display 				= "block";
 	currentTabLi.style.backgroundColor 		= "#EBEBEB";
 	currentTabLi.style.color 				= "black";
-}
-
-function handleExternalWebsite() {
-
 }
 
 
@@ -243,12 +241,14 @@ function validateSettingsInput(inputNumber) {
 		}
 	}
 
+	document.getElementById('quick-reports-settings').style.display				   = "none";
+	document.getElementById('quick-reports-settings-button').style.backgroundColor = "inherit";
+
 	UTILS.storeStorage(newData);
 
 	updateDropDownList();
 	updateUserDataOnTheScreen();
-	document.getElementById('quick-reports-settings').style.display = "none";
- 	//return false;
+
  }
 
 
@@ -256,14 +256,17 @@ function updateDropDownList() {
 	var dropDownList 			= document.getElementById("quick-reports-drop-down-links");
 	dropDownList.innerHTML 		= "";
 	dropDownList.onchange = handleOptionClick;
+	var urlsCtr 				= 0;
+	var externalWebsiteButton 	= document.getElementById('external-website-frame-button');
+	var cancelButton  		  	= document.getElementById('quick-reports-cancel-settings-button');
 
 	// Update the drop-down list at the quick reports tab
 	for ( i = 0; i < urlsNamesIds.length; ++i) {
 		currentUrlName 					= document.getElementById(urlsNamesIds[i]);
 		currentUrl 						= document.getElementById(urlsIds[i]);
 		if ( UTILS.notEmpty(currentUrlName.value) && UTILS.notEmpty(currentUrl.value) ) {
-			dropDownList.style.display  = "inline-block";
-
+			
+			urlsCtr++;
 			var currentOption			= document.createElement("OPTION");
 
 			currentOption.value 		= currentUrl.value;
@@ -271,6 +274,28 @@ function updateDropDownList() {
 
  			dropDownList.appendChild(currentOption);
 		}
+	}
+
+	if( urlsCtr > 0) {
+
+		dropDownList.style.display 		    = "inline-block";
+		externalWebsiteButton.style.display = "inline-block";
+		cancelButton.style.display			= "inline-block";
+
+	}
+	else {
+
+		/* If there are no links, hide dropdown list, external 
+		   website button and the cancel button*/
+		dropDownList.style.display 		    = "none";
+		externalWebsiteButton.style.display = "none";
+		cancelButton.style.display			= "none";
+
+		document.getElementById('quick-reports-iframe').setAttribute('src', '');
+		document.getElementById('external-website-frame-button').setAttribute('href', '');
+		document.getElementById('quick-reports-settings').style.display 			   = "block";
+		document.getElementById('quick-reports-settings-button').style.backgroundColor = "white";
+
 	}
 
 }
@@ -392,6 +417,7 @@ function handleSettingClick() {
 	else if ( this.id == 'my-team-folders-settings-button' ) {
 		//handle this case
 	}
+	this.style.backgroundColor = "white";
 }
 
 
@@ -401,7 +427,8 @@ function handleCancelSettingClick() {
 
 	if ( this.id == 'quick-reports-cancel-settings-button' ) {
 
-		document.getElementById('quick-reports-settings').style.display = "none";
+		document.getElementById('quick-reports-settings').style.display 			   = "none";
+		document.getElementById('quick-reports-settings-button').style.backgroundColor = "inherit";
 
 	}
 
@@ -413,4 +440,7 @@ function handleCancelSettingClick() {
 function handleOptionClick() {
 	document.getElementById('quick-reports-iframe').setAttribute('src', this.value);
 	document.getElementById('external-website-frame-button').setAttribute('href', this.value);
+	document.getElementById('quick-reports-settings').style.display = "none";
+	document.getElementById('quick-reports-settings-button').style.backgroundColor = "inherit";
+
 }

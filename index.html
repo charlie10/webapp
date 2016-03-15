@@ -34,7 +34,7 @@
             </div>
         </header>
         <div class="bg">
-            <p id = "notification-area"></p>
+            <p id="notification-area" class="notification-area"></p>
 
             
             <section class="page-body layout-wrap">
@@ -116,7 +116,7 @@
 
                             </select>
 
-                            <a id="external-website-frame-button"class="u-normal-link" target="_blank">
+                            <a id="external-website-frame-button"class="u-normal-link u-hide" target="_blank">
                                 <img src="./img/icons/expand.png" alt="External Website frame">
                             </a>
 
@@ -150,9 +150,10 @@
                                     <label for="url3">URL</label>
                                     <input class="input-type1" id="url3" type="url">
                                 </div>
-
-                                <button id="quick-reports-cancel-settings-button">Cancel</button>
-                                <button id="save-quick-report-button">Save</button>
+                                <div class="cancel-save-control">
+                                    <button id="quick-reports-cancel-settings-button" class="cancel-button">Cancel</button>
+                                    <button id="save-quick-report-button" class="save-button">Save</button>
+                                </div>
 
                         </div>
 

@@ -228,7 +228,11 @@ nav {
 }
 
 
-
+.notification-area {
+    background-color: #DBDBDB;
+    padding: 0.6rem;
+    box-sizing: border-box;
+}
 
 /*=====================end dropmenu====================*/
 
@@ -283,6 +287,9 @@ nav {
 
 .input-type1 {
     width: 40%;
+    border: none;
+    padding: 0.5rem;
+    box-sizing: border-box;
 }
 
 .u-hidden {
@@ -294,7 +301,7 @@ nav {
 
 iframe {
     width: 100%;
-    height: 100%;
+    height: calc(100% - 4rem);
 }
 
 .tab-surface {
@@ -324,14 +331,50 @@ iframe {
     display: none;
     z-index: 10;
     float: left;
+    padding: 0.5rem;
+    width: 30%;
+    border: none;
 }
 
 .frame-control {
     text-align: right;
-    padding: 0.8rem;
+    margin-top: 0.8rem;
     box-sizing: border-box;
     position: relative;
+    height: 2.6rem;
 }
+
+.frame-control a {
+    margin-right: 1rem;
+    padding: 0.5rem;
+    box-sizing: border-box;
+}
+
+.save-button {
+    border: none;
+    background-color: #000000;
+    color: #EEEEEE;
+    padding: 0.6rem;
+    width: 8rem;
+    line-height: 0.6rem;
+    box-sizing: border-box;
+}
+
+.cancel-button {
+    border: none;
+    background-color: transparent;
+    text-decoration: underline;
+
+}
+
+.cancel-save-control {
+    text-align: right;
+}
+
+.cancel-save-control button {
+    margin-right: 0.6rem;
+}
+
 
 /* ==========================================================================
    Helper classes
