@@ -78,7 +78,7 @@ function updateUserDataOnTheScreen() {
 	var quickReportsData = data.quickReportsData
 
 	// update the iframe to be the first url
-	for( i = ( quickReportsData.length - 1 ); i >= 0 ; --i ) {
+	for ( i = ( quickReportsData.length - 1 ); i >= 0 ; --i ) {
 
 		if( UTILS.notEmpty(quickReportsData[i].url) ) {
 			document.getElementById('quick-reports-iframe').setAttribute('src', quickReportsData[i].url);
@@ -87,7 +87,7 @@ function updateUserDataOnTheScreen() {
 
 	}
 
-	for( i = 0; i < quickReportsData.length; ++i ) {
+	for ( i = 0; i < quickReportsData.length; ++i ) {
 		
 		var currentUrlName 			= document.getElementById( urlsNamesIds[i] );
 		var currentUrl 				= document.getElementById( urlsIds[i] );
@@ -121,7 +121,7 @@ function handleTabClick() {
 */
 function handleTabChange(element, isClick) {
 
-	if( isClick === 1 ) { // handle tab click
+	if ( isClick === 1 ) { // handle tab click
 		window.location.hash 				= ( "/" + element.id );
 
 		//update the lastTab
@@ -220,8 +220,17 @@ function validateSettingsInput(inputNumber) {
  	//validate the data
  	for ( i = 1; i <= urlsNamesIds.length; ++i) {
 
- 		if ( validateSettingsInput(i) == false )
+ 		if ( validateSettingsInput(i) == false ) {
+
+ 			for ( i = i + 1; i <= urlsNamesIds.length; i++) {
+ 				var thisName						= document.getElementById( "name" + i );
+				var thisUrl				 			= document.getElementById( "url" + i );
+				thisUrl.style.border		 		= "transparent";
+				thisName.style.border 				= "transparent";
+
+ 			}
  			return;
+ 		}
  	}
 
  	var newData = UTILS.loadStorage();
@@ -324,7 +333,7 @@ function handleConfigData(result) {
 	notification 		= result.notification;
 	notificationElement = document.getElementById('notification-area');
 	//alert(notification);
-	if( ( notification != undefined ) && ( notification !== '' ) ) {
+	if ( ( notification != undefined ) && ( notification !== '' ) ) {
 		notificationElement.innerHTML = result.notification;
 	}
 	else {
