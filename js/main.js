@@ -64,10 +64,10 @@ var exmpUserData 	 = {
 };
 window.onload = function(){
 
+	//restore the last tab
 	var hashString = window.location.hash;
-	if ( hashString == '' ) {
-		window.location.hash = ( "/quick-reports" ); //by default show Quick Reports frame
-	}
+	var lastTab = UTILS.loadStorage().lastTab;
+	window.location.hash = ( "/" + lastTab );
 
 	// set the on click event listener to all the tabs
 	for ( i = 0; i < tabsIds.length; ++i ) {
@@ -93,6 +93,7 @@ window.onload = function(){
 
 	document.getElementById('quick-reports-settings-button').onclick = handleSettingClick;
 	document.getElementById('quick-reports-cancel-settings-button').onclick = handleCancelSettingClick;
+	document.getElementById('external-website-frame-button').onclick = handleExternalWebsite;
 
 	/* get the config.json file and handle the data via the
 	   handleConfigData function */
@@ -151,6 +152,12 @@ function handleTabChange(element, isClick) {
 
 	if( isClick === 1 ) { // handle tab click
 		window.location.hash 				= ( "/" + element.id );
+
+		//update the lastTab
+		data = UTILS.loadStorage();
+		data.lastTab = element.id;
+		UTILS.storeStorage(data);
+
 		var frameElementPrefix 				= element.id;
 
 
@@ -180,6 +187,10 @@ function handleTabChange(element, isClick) {
 	currentTabLi.style.color 				= "black";
 }
 
+function handleExternalWebsite() {
+
+}
+
 /*
  * Handle urls names (labels) change
  * Description: on name change make its url input as required
@@ -204,6 +215,7 @@ function handleNameChange() {
 /*
  * Handle urls change
  * Description: on url change make its url input as required
+ * SHOULD BE UPDATED !!!
 */
 
 function handleUrlChange() {
@@ -262,7 +274,7 @@ function handleUrlChange() {
 	UTILS.storeStorage(newData);
 
 	updateDropDownList();
-
+	document.getElementById('quick-reports-settings-button').style.display = "none";
  	//return false;
  }
 
@@ -427,4 +439,5 @@ function handleCancelSettingClick() {
 
 function handleOptionClick() {
 	document.getElementById('quick-reports-iframe').setAttribute('src', this.value);
+	document.getElementById('external-website-frame-button').setAttribute('href', this.value);
 }

@@ -34,7 +34,10 @@ var userDataSturct 	 = {
 								name :'',
 								url  :''
 						}
-					]
+					],
+
+					lastTab:'quick-reports'
+
 
 };
 

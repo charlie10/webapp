@@ -28,13 +28,15 @@
                     <img src="img/logo-netcraft.svg" alt="netcraft">
                 </a>
                 <form class="search-box">   
-                    <input type="search" name="q" placeholder="search">
+                    <input id="search" type="search" name="q" placeholder="search">
+                    <label for="search" class="hidden">search</label>
                 </form>
             </div>
         </header>
         <div class="bg">
             <p id = "notification-area"></p>
 
+            
             <section class="page-body layout-wrap">
                 <div class="notifications"></div>
 
@@ -106,6 +108,7 @@
                     <div id="quick-reports-frame" class="u-hidden tab-surface">
 
                         <div class="frame-control">
+                            <label for="quick-reports-drop-down-links" class="hidden">URLs' List</label>
                             <select class = "drop-down-links" id="quick-reports-drop-down-links">
                                 <option value=""></option>
                                 <option value=""></option>
@@ -113,7 +116,7 @@
 
                             </select>
 
-                            <a href="" class="u-normal-link">
+                            <a id="external-website-frame-button"class="u-normal-link" target="_blank">
                                 <img src="./img/icons/expand.png" alt="External Website frame">
                             </a>
 
@@ -123,9 +126,8 @@
                         </div>
 
                         <div id="quick-reports-settings" class="settings">
-                            <form >
                                 
-                                <div>
+                                <div class="name-url">
                                     <p class="inline-par">Report01</p>
                                     <label for="name1">Name</label>
                                     <input class="input-type1" id="name1" type="text">
@@ -133,7 +135,7 @@
                                     <input class="input-type1" id="url1" type="url">
                                 </div>
 
-                                <div>
+                                <div class="name-url">
                                     <p class="inline-par">Report02</p>
                                     <label for="name2">Name</label>
                                     <input class="input-type1" id="name2" type="text">
@@ -141,7 +143,7 @@
                                     <input class="input-type1" id="url2" type="url">
                                 </div>
 
-                                <div>
+                                <div class="name-url">
                                     <p class="inline-par">Report03</p>
                                     <label for="name3">Name</label>
                                     <input class="input-type1" id="name3" type="text">
@@ -152,7 +154,6 @@
                                 <button id="quick-reports-cancel-settings-button">Cancel</button>
                                 <button id="save-quick-report-button">Save</button>
 
-                            </form>
                         </div>
 
                         <iframe id="quick-reports-iframe" src="" ></iframe>

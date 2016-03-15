@@ -272,8 +272,7 @@ nav {
 
 #quick-reports-frame form {
     display: inline-block;
-    margin-left: 2em;
-    width: 80%;
+    width: 100%;
     margin-bottom: 2em;
 }
 
@@ -308,14 +307,23 @@ iframe {
     position: absolute;
     left: 0;
     width: 100%;
-    background-color: rgba(235, 235, 235, 19);
+    background-color: white;
     padding: 1rem;
     box-sizing: border-box;
+}
+
+.name-url {
+    padding: 0.6rem;
+    margin-top: 0.6rem;
+    margin-bottom: 0.6rem;
+    box-sizing: border-box;
+    background-color: #DBDBDB;
 }
 
 .drop-down-links {
     display: none;
     z-index: 10;
+    float: left;
 }
 
 .frame-control {
@@ -329,7 +337,7 @@ iframe {
    Helper classes
    ========================================================================== */
 
-.u-normal-link{
+.u-normal-link {
     color: inherit;
     display: inline-block;
     text-decoration: none;
