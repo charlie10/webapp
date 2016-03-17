@@ -229,7 +229,7 @@ function validateSettingsInput(inputNumber) {
 				thisName.style.border 				= "transparent";
 
  			}
- 			return;
+ 			return ;
  		}
  	}
 
@@ -257,6 +257,7 @@ function validateSettingsInput(inputNumber) {
 
 	updateDropDownList();
 	updateUserDataOnTheScreen();
+	return false;
 
  }
 
@@ -444,6 +445,7 @@ function handleCancelSettingClick() {
 	else if ( this.id == 'my-team-folders-cancel-settings-button' ) {
 		//handle this case
 	}
+	return false;
 }
 
 function handleOptionClick() {
