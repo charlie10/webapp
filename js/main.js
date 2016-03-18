@@ -35,7 +35,6 @@ window.onload = function(){
 	}
 
 	//restore the last tab
-	var hashString = window.location.hash;
 	var lastTab = UTILS.loadStorage().lastTab;
 	window.location.hash = ( "/" + lastTab );
 
@@ -403,14 +402,19 @@ function handleConfigData(result) {
 	tabList = result.tabsList;
 
 	//my folder iframe
-	myFoldersDiv		 = document.getElementById('my-folders-frame');
-	myFoldersframe  	 = document.createElement("IFRAME");
+	var myFoldersDiv		 = document.getElementById('my-folders-frame');
+	var myFoldersframe  	 = document.createElement("IFRAME");
+	var externalWebsite 	 = document.getElementById('my-folders-external-website-frame-button');
+	externalWebsite.setAttribute('href', tabList[1].options.url);
 	myFoldersframe.setAttribute('src',tabList[1].options.url);
 	myFoldersDiv.appendChild(myFoldersframe);
 
+
 	//public folders iframe
-	publicFoldersDiv	 = document.getElementById('public-folders-frame');
-	publicFoldersframe   = document.createElement("IFRAME");
+	var publicFoldersDiv	 = document.getElementById('public-folders-frame');
+	var publicFoldersframe   = document.createElement("IFRAME");
+	var externalWebsite 	 = document.getElementById('public-folders-external-website-frame-button');
+	externalWebsite.setAttribute('href', tabList[3].options.url);
 	publicFoldersframe.setAttribute('src',tabList[3].options.url);
 	publicFoldersDiv.appendChild(publicFoldersframe);
 }
