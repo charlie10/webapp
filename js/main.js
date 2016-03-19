@@ -14,10 +14,22 @@ var urlsNamesIds = [
 						"name3"
 ]
 
+var urlsNamesIds2 = [
+						"name4",
+						"name5",
+						"name6"
+]
+
 var urlsIds 	 = [
 						"url1",
 						"url2",
 						"url3"
+]
+
+var urlsIds2 	 = [
+						"url4",
+						"url5",
+						"url6"
 ]
 
 var optionsIds	= [
@@ -50,8 +62,15 @@ window.onload = function(){
 	saveQuickReportButton = document.getElementById('save-quick-report-button');
 	saveQuickReportButton.onclick = handleSaveURLs;	
 
+	document.getElementById("save-my-team-folders-button").onclick = saveMyTeamFolders;
+
 	document.getElementById('quick-reports-settings-button').onclick = handleSettingClick;
 	document.getElementById('quick-reports-cancel-settings-button').onclick = handleCancelSettingClick;
+
+	document.getElementById('my-team-folders-settings-button').onclick = handleSettingClick;
+	document.getElementById('my-team-folders-cancel-settings-button').onclick = handleCancelSettingClick;
+
+
 
 	/* get the config.json file and handle the data via the
 	   handleConfigData function */
@@ -65,6 +84,7 @@ window.onload = function(){
 	updateUserDataOnTheScreen();
 
 	updateDropDownList();
+	updateDropDownList2();
 
 }
 
@@ -93,6 +113,29 @@ function updateUserDataOnTheScreen() {
 
 		currentUrlName.value		= quickReportsData[i].name;
 		currentUrl.value 			= quickReportsData[i].url;
+	}
+
+	// Update My Team Folder data
+	var myTeamData = data.myTeamData
+
+	// update the iframe to be the first url
+	for ( i = 0; i < myTeamData.length ; ++i ) {
+
+		if( UTILS.notEmpty(myTeamData[i].url) ) {
+			document.getElementById('my-team-folders-iframe').setAttribute('src', myTeamData[i].url);
+			document.getElementById('my-team-folders-external-website-frame-button').setAttribute('href', myTeamData[i].url);
+			break;
+		}
+
+	}
+
+	for ( i = 0; i < myTeamData.length; ++i ) {
+		
+		var currentUrlName 			= document.getElementById( urlsNamesIds2[i] );
+		var currentUrl 				= document.getElementById( urlsIds2[i] );
+
+		currentUrlName.value		= myTeamData[i].name;
+		currentUrl.value 			= myTeamData[i].url;
 	}
 
 }
@@ -260,6 +303,98 @@ function validateSettingsInput(inputNumber) {
 
  }
 
+function saveMyTeamFolders() {
+	 	//validate the data
+ 	for ( i = 4; i <= 6; ++i) {
+
+ 		if ( validateSettingsInput(i) == false ) {
+
+ 			for ( i = i + 1; i <= 6; i++) {
+ 				var thisName						= document.getElementById( "name" + i );
+				var thisUrl				 			= document.getElementById( "url" + i );
+				thisUrl.style.border		 		= "transparent";
+				thisName.style.border 				= "transparent";
+
+ 			}
+ 			return ;
+ 		}
+ 	}
+
+ 	var newData = UTILS.loadStorage();
+	for ( i = 0; i < urlsNamesIds2.length; ++i) {
+
+		currentUrlName 		= document.getElementById(urlsNamesIds2[i]);
+		currentUrl 			= document.getElementById(urlsIds2[i]);
+
+		if ( UTILS.isUrl( currentUrl.value ) || ( ( currentUrlName.value == '' ) && ( currentUrl.value == '' ) )) {
+		
+			newData.myTeamData[i] = {
+				name	: currentUrlName.value,
+				url		: currentUrl.value
+			}
+
+			//alert(localStorage.url1);		
+		}
+	}
+
+	document.getElementById('my-team-folders-settings').style.display				   = "none";
+	document.getElementById('my-team-folders-settings-button').style.backgroundColor = "inherit";
+
+	UTILS.storeStorage(newData);
+
+	updateDropDownList2();
+	updateUserDataOnTheScreen();
+	return false;
+
+}
+
+function updateDropDownList2() {
+	var dropDownList 			= document.getElementById("my-team-folders-drop-down-links");
+	dropDownList.innerHTML 		= "";
+	dropDownList.onchange = handleOptionClick2;
+	var urlsCtr 				= 0;
+	var externalWebsiteButton 	= document.getElementById('my-team-folders-external-website-frame-button');
+	var cancelButton  		  	= document.getElementById('my-team-folders-cancel-settings-button');
+
+	// Update the drop-down list at the quick reports tab
+	for ( i = 0; i < urlsNamesIds2.length; ++i) {
+		currentUrlName 					= document.getElementById(urlsNamesIds2[i]);
+		currentUrl 						= document.getElementById(urlsIds2[i]);
+		if ( UTILS.notEmpty(currentUrlName.value) && UTILS.notEmpty(currentUrl.value) ) {
+			
+			urlsCtr++;
+			var currentOption			= document.createElement("OPTION");
+
+			currentOption.value 		= currentUrl.value;
+			currentOption.innerHTML 	= currentUrlName.value;
+
+ 			dropDownList.appendChild(currentOption);
+		}
+	}
+
+	if( urlsCtr > 0) {
+
+		dropDownList.style.display 		    = "inline-block";
+		externalWebsiteButton.style.display = "inline-block";
+		cancelButton.style.display			= "inline-block";
+
+	}
+	else {
+
+		/* If there are no links, hide dropdown list, external 
+		   website button and the cancel button*/
+		dropDownList.style.display 		    = "none";
+		externalWebsiteButton.style.display = "none";
+		cancelButton.style.display			= "none";
+
+		document.getElementById('my-team-folders-iframe').setAttribute('src', '');
+		document.getElementById('my-team-folders-external-website-frame-button').setAttribute('href', '');
+		document.getElementById('my-team-folders-settings').style.display 			   = "block";
+		document.getElementById('my-team-folders-settings-button').style.backgroundColor = "white";
+
+	}
+}
+
 
 function updateDropDownList() {
 	var dropDownList 			= document.getElementById("quick-reports-drop-down-links");
@@ -306,6 +441,11 @@ function updateDropDownList() {
 		document.getElementById('quick-reports-settings-button').style.backgroundColor = "white";
 
 	}
+
+
+
+
+
 
 }
 
@@ -430,6 +570,7 @@ function handleSettingClick() {
 
 	else if ( this.id == 'my-team-folders-settings-button' ) {
 		//handle this case
+		document.getElementById('my-team-folders-settings').style.display = "block"
 	}
 	this.style.backgroundColor = "white";
 }
@@ -441,13 +582,14 @@ function handleCancelSettingClick() {
 
 	if ( this.id == 'quick-reports-cancel-settings-button' ) {
 
-		document.getElementById('quick-reports-settings').style.display 			   = "none";
-		document.getElementById('quick-reports-settings-button').style.backgroundColor = "inherit";
+		document.getElementById('quick-reports-settings').style.display 			  	 = "none";
+		document.getElementById('quick-reports-settings-button').style.backgroundColor 	 = "inherit";
 
 	}
 
 	else if ( this.id == 'my-team-folders-cancel-settings-button' ) {
-		//handle this case
+		document.getElementById('my-team-folders-settings').style.display 			  	 = "none";
+		document.getElementById('my-team-folders-settings-button').style.backgroundColor = "inherit";
 	}
 	return false;
 }
@@ -457,5 +599,13 @@ function handleOptionClick() {
 	document.getElementById('external-website-frame-button').setAttribute('href', this.value);
 	document.getElementById('quick-reports-settings').style.display = "none";
 	document.getElementById('quick-reports-settings-button').style.backgroundColor = "inherit";
+
+}
+
+function handleOptionClick2() {
+	document.getElementById('my-team-folders-iframe').setAttribute('src', this.value);
+	document.getElementById('my-team-folders-external-website-frame-button').setAttribute('href', this.value);
+	document.getElementById('my-team-folders-settings').style.display = "none";
+	document.getElementById('my-team-folders-settings-button').style.backgroundColor = "inherit";
 
 }
