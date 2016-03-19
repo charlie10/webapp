@@ -70,6 +70,8 @@ window.onload = function(){
 	document.getElementById('my-team-folders-settings-button').onclick = handleSettingClick;
 	document.getElementById('my-team-folders-cancel-settings-button').onclick = handleCancelSettingClick;
 
+	document.getElementById('search-form').onsubmit = searchReport;
+
 
 
 	/* get the config.json file and handle the data via the
@@ -351,7 +353,7 @@ function saveMyTeamFolders() {
 function updateDropDownList2() {
 	var dropDownList 			= document.getElementById("my-team-folders-drop-down-links");
 	dropDownList.innerHTML 		= "";
-	dropDownList.onchange = handleOptionClick2;
+	dropDownList.onchange 		= handleOptionClick2;
 	var urlsCtr 				= 0;
 	var externalWebsiteButton 	= document.getElementById('my-team-folders-external-website-frame-button');
 	var cancelButton  		  	= document.getElementById('my-team-folders-cancel-settings-button');
@@ -608,4 +610,78 @@ function handleOptionClick2() {
 	document.getElementById('my-team-folders-settings').style.display = "none";
 	document.getElementById('my-team-folders-settings-button').style.backgroundColor = "inherit";
 
+}
+
+
+function searchReport() {
+	//alert(this.q.value);
+
+	var query = this.q.value;
+
+	if ( ( query == undefined ) || ( query == '' ) ) {
+		return false;
+	}
+
+	data = UTILS.loadStorage();
+
+	//search in quick reports
+	quickReportsData = data.quickReportsData;
+	var i;
+	var j = 0;
+	for ( i = 0; i < quickReportsData.length; ++i ) {
+		var currentReport = quickReportsData[i];
+
+		if ( currentReport.name != '') {
+			++j;
+		}
+
+		if ( query === currentReport.name ) {
+			
+			var dropDownList 	= document.getElementById("quick-reports-drop-down-links");
+			var url = currentReport.url;
+
+			handleTabChange(document.getElementById('quick-reports'), 1);
+			dropDownList.selectedIndex = ( j - 1 );
+
+			document.getElementById('quick-reports-iframe').setAttribute('src', url);
+			document.getElementById('external-website-frame-button').setAttribute('href', url);
+			document.getElementById('quick-reports-settings').style.display = "none";
+			document.getElementById('quick-reports-settings-button').style.backgroundColor = "inherit";
+			return false;
+		}
+
+	}
+
+	//search in my team folders
+	myTeamData = data.myTeamData;
+	var i;
+	var j = 0;
+	for ( i = 0; i < myTeamData.length; ++i ) {
+		var currentReport = myTeamData[i];
+
+		if ( currentReport.name != '') {
+			++j;
+		}
+
+		if ( query === currentReport.name ) {
+
+			debugger;
+			var dropDownList 	= document.getElementById("my-team-folders-drop-down-links");
+			var url 			= currentReport.url;
+			debugger
+			handleTabChange(document.getElementById('my-team-folders'), 1);
+			debugger
+			dropDownList.selectedIndex = ( j - 1 );
+			debugger;
+			document.getElementById('my-team-folders-iframe').setAttribute('src', url);
+			document.getElementById('my-team-folders-external-website-frame-button').setAttribute('href', url);
+			document.getElementById('my-team-folders-settings').style.display = "none";
+			document.getElementById('my-team-folders-settings-button').style.backgroundColor = "inherit";
+			return false;
+		}
+
+	}
+
+	alert(query + ' NOT found in the current reports');
+	return false;
 }

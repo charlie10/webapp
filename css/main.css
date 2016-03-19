@@ -280,7 +280,7 @@ nav {
     margin-bottom: 2em;
 }
 
-#quick-reports-frame {
+.tab-surface {
     padding: 0.5rem;
     box-sizing: border-box;
 }
