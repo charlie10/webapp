@@ -655,6 +655,10 @@ function searchReport() {
 
 	if ( ( query == undefined ) || ( query == '' ) ) {
 		notificationArea.innerHTML = notificationMessage;
+		notificationArea.style.border = "solid red";
+		setTimeout( function() {
+			notificationArea.style.border = "transparent";
+		}, 1000 );
 		return false;
 	}
 
@@ -718,5 +722,10 @@ function searchReport() {
 	}
 
 	notificationArea.innerHTML = query + ' NOT found in the current reports';
+	notificationArea.style.border = "solid red";
+	setTimeout( function() {
+		notificationArea.style.border = "transparent";
+	}, 1000 );
+
 	return false;
 }
