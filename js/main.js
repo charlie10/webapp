@@ -1,6 +1,11 @@
 
 // global arrays wich help the developer(s) prevent badly duplicate code.
 
+var notificationMessage;
+
+/*
+* the tabs ids.
+*/
 var tabsIds 	 = [
 						"quick-reports",
 						"my-folders",
@@ -8,34 +13,40 @@ var tabsIds 	 = [
 						"public-folders"
 ];
 
+/*
+ * quick reports urls' names' ids.  
+*/
 var urlsNamesIds = [
 						"name1",
 						"name2",
 						"name3"
 ]
 
+/*
+ * my team folders urls' names' ids.  
+*/
 var urlsNamesIds2 = [
 						"name4",
 						"name5",
 						"name6"
 ]
 
+/*
+ * quick reports urls' ids. 
+*/
 var urlsIds 	 = [
 						"url1",
 						"url2",
 						"url3"
 ]
 
+/*
+ * my team folders urls' ids. 
+*/
 var urlsIds2 	 = [
 						"url4",
 						"url5",
 						"url6"
-]
-
-var optionsIds	= [
-						"option1",
-						"option2",
-						"option3"
 ]
 
 
@@ -259,7 +270,10 @@ function validateSettingsInput(inputNumber) {
 
 }
 
- function handleSaveURLs() {
+/*
+ * this fucntion saves quick reports reports.
+*/
+function handleSaveURLs() {
 
  	//validate the data
  	for ( i = 1; i <= urlsNamesIds.length; ++i) {
@@ -290,7 +304,6 @@ function validateSettingsInput(inputNumber) {
 				url		: currentUrl.value
 			}
 
-			//alert(localStorage.url1);		
 		}
 	}
 
@@ -305,6 +318,9 @@ function validateSettingsInput(inputNumber) {
 
  }
 
+/*
+ * this fucntion saves my team folders reports.
+*/
 function saveMyTeamFolders() {
 	 	//validate the data
  	for ( i = 4; i <= 6; ++i) {
@@ -335,7 +351,6 @@ function saveMyTeamFolders() {
 				url		: currentUrl.value
 			}
 
-			//alert(localStorage.url1);		
 		}
 	}
 
@@ -350,6 +365,9 @@ function saveMyTeamFolders() {
 
 }
 
+/*
+ * update the drop down list in my team folders
+*/
 function updateDropDownList2() {
 	var dropDownList 			= document.getElementById("my-team-folders-drop-down-links");
 	dropDownList.innerHTML 		= "";
@@ -397,7 +415,9 @@ function updateDropDownList2() {
 	}
 }
 
-
+/*
+ * update the drop down list in quick reports.
+*/
 function updateDropDownList() {
 	var dropDownList 			= document.getElementById("quick-reports-drop-down-links");
 	dropDownList.innerHTML 		= "";
@@ -473,8 +493,9 @@ function handleConfigData(result) {
 	* Update the notification area
 	*********************************/
 	notification 		= result.notification;
+	notificationMessage = notification;
 	notificationElement = document.getElementById('notification-area');
-	//alert(notification);
+
 	if ( ( notification != undefined ) && ( notification !== '' ) ) {
 		notificationElement.innerHTML = result.notification;
 	}
@@ -562,6 +583,10 @@ function handleConfigData(result) {
 }
 
 
+/*
+ * handle open setting in quick reports 
+*/
+
 function handleSettingClick() {
 
 	if ( this.id == 'quick-reports-settings-button' ) {
@@ -571,15 +596,15 @@ function handleSettingClick() {
 	}
 
 	else if ( this.id == 'my-team-folders-settings-button' ) {
-		//handle this case
 		document.getElementById('my-team-folders-settings').style.display = "block"
 	}
 	this.style.backgroundColor = "white";
 }
 
 
-
-
+/*
+ * handle open setting in my team folders 
+*/
 function handleCancelSettingClick() {
 
 	if ( this.id == 'quick-reports-cancel-settings-button' ) {
@@ -596,6 +621,9 @@ function handleCancelSettingClick() {
 	return false;
 }
 
+/*
+ * handle option click in quick reports 
+*/
 function handleOptionClick() {
 	document.getElementById('quick-reports-iframe').setAttribute('src', this.value);
 	document.getElementById('external-website-frame-button').setAttribute('href', this.value);
@@ -604,6 +632,9 @@ function handleOptionClick() {
 
 }
 
+/*
+ * handle option click in my team folders 
+*/
 function handleOptionClick2() {
 	document.getElementById('my-team-folders-iframe').setAttribute('src', this.value);
 	document.getElementById('my-team-folders-external-website-frame-button').setAttribute('href', this.value);
@@ -612,13 +643,18 @@ function handleOptionClick2() {
 
 }
 
+/**
+ * function that search a report according to the query, and 
+   update the notification area accordingly.
+*/
 
 function searchReport() {
-	//alert(this.q.value);
 
+	var notificationArea = document.getElementById('notification-area');
 	var query = this.q.value;
 
 	if ( ( query == undefined ) || ( query == '' ) ) {
+		notificationArea.innerHTML = notificationMessage;
 		return false;
 	}
 
@@ -635,7 +671,7 @@ function searchReport() {
 			++j;
 		}
 
-		if ( query === currentReport.name ) {
+		if ( currentReport.name.search(query) >= 0 ) {
 			
 			var dropDownList 	= document.getElementById("quick-reports-drop-down-links");
 			var url = currentReport.url;
@@ -647,6 +683,7 @@ function searchReport() {
 			document.getElementById('external-website-frame-button').setAttribute('href', url);
 			document.getElementById('quick-reports-settings').style.display = "none";
 			document.getElementById('quick-reports-settings-button').style.backgroundColor = "inherit";
+			notificationArea.innerHTML = notificationMessage;
 			return false;
 		}
 
@@ -663,25 +700,23 @@ function searchReport() {
 			++j;
 		}
 
-		if ( query === currentReport.name ) {
+		if ( currentReport.name.search(query) >= 0 ) {
 
-			debugger;
 			var dropDownList 	= document.getElementById("my-team-folders-drop-down-links");
 			var url 			= currentReport.url;
-			debugger
+
 			handleTabChange(document.getElementById('my-team-folders'), 1);
-			debugger
 			dropDownList.selectedIndex = ( j - 1 );
-			debugger;
 			document.getElementById('my-team-folders-iframe').setAttribute('src', url);
 			document.getElementById('my-team-folders-external-website-frame-button').setAttribute('href', url);
 			document.getElementById('my-team-folders-settings').style.display = "none";
 			document.getElementById('my-team-folders-settings-button').style.backgroundColor = "inherit";
+			notificationArea.innerHTML = notificationMessage;
 			return false;
 		}
 
 	}
 
-	alert(query + ' NOT found in the current reports');
+	notificationArea.innerHTML = query + ' NOT found in the current reports';
 	return false;
 }
