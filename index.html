@@ -10,6 +10,7 @@
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         <!-- Place favicon.ico in the root directory -->
 
+        <link rel="stylesheet" href="css/fonts/style.css">
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
        <!-- <script src="js/vendor/modernizr-2.8.3.min.js"></script> -->
@@ -99,10 +100,30 @@
     
                 <section class="tabs">
                     <ul class="display-flex-space-between tabs-ulist">
-                        <li href="#quick-reports" id="quick-reports"><a><i></i>Quick Reports</a></li>
-                        <li href="#my-folders" id="my-folders"><a>My Folders</a></li>
-                        <li href="#my-team-folders" id="my-team-folders"><a>My Team Folders</a></li>
-                        <li href="#public-folders" id="public-folders"><a>Public Folders</a></li>
+                        <li href="#quick-reports" id="quick-reports">
+                            <a>
+                                <i class="icon-external-link"></i>
+                                Quick Reports
+                            </a>
+                        </li>
+                        <li href="#my-folders" id="my-folders">
+                            <a>
+                                <i class="icon-star-o"></i>
+                                My Folders
+                            </a>
+                        </li>
+                        <li href="#my-team-folders" id="my-team-folders">
+                            <a>
+                                <i class="icon-folder-open-o"></i>
+                                My Team Folders
+                            </a>
+                        </li>
+                        <li href="#public-folders" id="public-folders">
+                            <a>
+                                <i class="icon-copy"></i>
+                                Public Folders
+                            </a>
+                        </li>
                     </ul>
 
                     <div id="quick-reports-frame" class="u-hidden tab-surface">
@@ -151,7 +172,7 @@
                                         <input class="input-type1" id="url3" type="url">
                                     </div>
                                     <div class="cancel-save-control">
-                                        <button id="quick-reports-cancel-settings-button" class="cancel-button">Cancel</button>
+                                        <button type="button" id="quick-reports-cancel-settings-button" class="cancel-button">Cancel</button>
                                         <button id="save-quick-report-button" class="save-button">Save</button>
                                     </div>
                                 </form>
@@ -217,7 +238,7 @@
                                     </div>
 
                                     <div class="cancel-save-control">
-                                        <button id="my-team-folders-cancel-settings-button" class="cancel-button">Cancel</button>
+                                        <button type="button" id="my-team-folders-cancel-settings-button" class="cancel-button">Cancel</button>
                                         <button id="save-my-team-folders-button" class="save-button">Save</button>
                                     </div>
                                 </form>
